@@ -6,6 +6,7 @@ import {ChangeEventHandler, FormEventHandler, useState} from "react";
 
 
 const SignUp = () => {
+    const [busy, setBusy] = useState(false);
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -20,6 +21,7 @@ const SignUp = () => {
     };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+        setBusy(true);
         e.preventDefault();
         // sends message to POST method created in app/auth/users/route.ts
         const res = await fetch("/api/auth/users", {
@@ -27,6 +29,7 @@ const SignUp = () => {
             body: JSON.stringify(userInfo),
         }).then( (res) => res.json());
         console.log(res);
+        setBusy(false);
     }
 
     return (
@@ -53,6 +56,8 @@ const SignUp = () => {
                 <button
                     className="w-full py-2 mt-4 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600"
                     type="submit"
+                    disabled={busy}
+                    style={{ opacity: busy ? 0.5 : 1}}
                 >
                     Sign Up
                 </button>
