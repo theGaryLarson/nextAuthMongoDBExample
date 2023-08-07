@@ -1,15 +1,18 @@
 "use client"
-
-import React from "react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import React from "react";
+
 
 export default function AuthProfileMenu() {
-    const isAuth = false;
+    const {data, status} = useSession();
+
+    const isAuth = status === "authenticated";
 
     if (isAuth) {
         return (
             <p>
-                <button>logout</button>
+                {data?.user?.name} <button onClick={() => signOut()}>logout</button>
             </p>
         )
     }
