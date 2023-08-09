@@ -31,8 +31,15 @@ const SignIn = () => {
         });
 
 
-        if (res?.error) setError(res.error);
-        router.replace("/profile")
+        if (res?.error) {
+            setError(res.error);
+            // router.replace("/permission-denied")
+        } else {
+            router.replace("/profile")
+        }
+
+        // if the user signs in successfully route them to the profile page. Look at useRouter import from location
+
     }
 
     return (
